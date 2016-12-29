@@ -10,6 +10,8 @@ import { DataService } from './services/data.service';
 })
 export class AppComponent implements OnInit {
   tasks: any;
+  title: string;
+  name: string;
   constructor(private dataService: DataService) {
     this.dataService.getTasks().subscribe(tasks => { this.tasks = tasks; });
   }
@@ -17,7 +19,16 @@ export class AppComponent implements OnInit {
   ngOnInit() {
   }
 
-  myTasks() {
-    console.log(this.tasks);
+  addTask(): void {
+    let newTask = {
+      title: this.title,
+      name: this.name
+    };
+
+    this.dataService.addTask(newTask).subscribe(task => {
+      this.tasks.push(task);
+      this.title = '';
+      this.name = '';
+    });
   }
 }

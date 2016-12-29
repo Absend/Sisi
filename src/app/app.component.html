@@ -1,11 +1,11 @@
 <div>
   app works!
   <hr>
-  <form>
+  <form (ngSubmit)="addTask()">
     <label for="title-input">title: </label>
-    <input id="title-input" type="text" name="title-input" value="">
+    <input [(ngModel)]="title" id="title-input" type="text" name="title" value="">
     <label for="name-input">name: </label>
-    <input id="name-input" type="text" name="name-input" value="">
+    <input [(ngModel)]="name" id="name-input" type="text" name="name" value="">
     <button type="submit">Submit task</button>
   </form>
   <div *ngFor="let task of tasks">
