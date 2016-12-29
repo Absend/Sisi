@@ -1,4 +1,19 @@
-<p>
+<div>
   app works!
-  {{ myTasks() }}
-</p>
+  <hr>
+  <form>
+    <label for="title-input">title: </label>
+    <input id="title-input" type="text" name="title-input" value="">
+    <label for="name-input">name: </label>
+    <input id="name-input" type="text" name="name-input" value="">
+    <button type="submit">Submit task</button>
+  </form>
+  <div *ngFor="let task of tasks">
+    <div class="container">
+      <label for="title">title: </label>
+      <h1 id="title">{{task.title}}</h1>
+      <label for="nam">name: </label>
+      <h2 id="name">{{task.name}}</h2>
+    </div>
+  </div>
+</div>

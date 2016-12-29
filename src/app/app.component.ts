@@ -11,13 +11,13 @@ import { DataService } from './services/data.service';
 export class AppComponent implements OnInit {
   tasks: any;
   constructor(private dataService: DataService) {
-    this.dataService.getTasks().subscribe(tasks => console.log(tasks));
-   }
+    this.dataService.getTasks().subscribe(tasks => { this.tasks = tasks; });
+  }
 
   ngOnInit() {
   }
 
   myTasks() {
-    return this.tasks;
+    console.log(this.tasks);
   }
 }

@@ -1,0 +1,13 @@
+.container {
+	background-color: gray;
+	color: whitesmoke;
+	border: 2px solid darkgreen;
+	padding: 2px;
+	margin: 2px
+}
+
+button {
+	min-width: 50px;
+	min-height: 30px;
+	margin-left: 10px;
+}

@@ -11,18 +11,18 @@ export class DataService {
   constructor(private http: Http) { }
 
   getTasks(): Observable<any> {
-    return this.http.get('/tasks').map(res => res.json());
+    return this.http.get('/tasks').map(res => (res.json()));
   }
 
   addTask(task: any): Observable<any> {
-    return this.http.post('/task', JSON.stringify(task), this.options);
+    return this.http.post('/tasks', JSON.stringify(task), this.options);
   }
 
   editTask(task: any): Observable<any> {
-    return this.http.put(`/cat/${task._id}`, JSON.stringify(task), this.options);
+    return this.http.put(`/tasks/${task._id}`, JSON.stringify(task), this.options);
   }
 
   deleteTask(task: any): Observable<any> {
-    return this.http.delete(`/cat/${task._id}`, this.options);
+    return this.http.delete(`/tasks/${task._id}`, this.options);
   }
 }
