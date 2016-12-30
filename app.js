@@ -1,30 +1,36 @@
 'use strict';
 
+
+// MongoDB config
+const mongojs = require('mongojs');
+const connectionString = 'mongodb://Admin:secretpassword@ds113958.mlab.com:13958/webdjs';
+const collections = ['tasks'];
+
+const db = mongojs(connectionString, collections);
+
+// EXPRESS config
 const express = require('express'),
 	path = require('path'),
-	bodyParser = require('body-parser'),
-	mongojs = require('mongojs');
-
-const db = mongojs('mongodb://Admin:secretpassword@ds113958.mlab.com:13958/webdjs');
+	bodyParser = require('body-parser');
 
 const app = express();
 
-// View engine
+		// view engine
 app.set('views engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 
-// Set static folder
+		// set static folder
 app.use('/', express.static(path.join(__dirname, 'src')));
 
-// Body Parser MW
+		// body-parser MW
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Routes
+		// routes
 app
 	.get('/tasks', function (req, res, next) {
-		db.tasks.find(function (err, tasks) {
+		db['tasks'].find(function (err, tasks) {
 			if (err) {
 				res.send(err);
 			}
@@ -32,7 +38,7 @@ app
 		})
 	})
 	.get('/tasks/:id', function (req, res, next) {
-		db.tasks.findOne({ _id: mongojs.ObjectId(req.params.id) }, function (err, task) {
+		db['tasks'].findOne({ _id: mongojs.ObjectId(req.params.id) }, function (err, task) {
 			if (err) {
 				res.send(err);
 			}
@@ -47,7 +53,7 @@ app
 			res.json({ "error": "Bad data!" });
 		}
 		else {
-			db.tasks.save(task, function (err, task) {
+			db['tasks'].save(task, function (err, task) {
 				if (err) {
 					res.send(err);
 				}
@@ -72,7 +78,7 @@ app
 			res.json({ "error": "Bad data!" });
 		}
 		else {
-			db.tasks.update({ _id: mongojs.ObjectId(req.params.id) }, updatedTask, {}, function (err, task) {
+			db['tasks'].update({ _id: mongojs.ObjectId(req.params.id) }, updatedTask, {}, function (err, task) {
 				if (err) {
 					res.send(err);
 				}
@@ -81,7 +87,7 @@ app
 		}
 	})
 	.delete('/tasks/:id', function (req, res, next) {
-		db.tasks.remove({ _id: mongojs.ObjectId(req.params.id) }, function (err, task) {
+		db['tasks'].remove({ _id: mongojs.ObjectId(req.params.id) }, function (err, task) {
 			if (err) {
 				res.send(err);
 			}
@@ -89,6 +95,7 @@ app
 		})
 	});
 
+		// connection on port
 const port = 3000;
 app.listen(port);
 console.log(`Server running on port:${port}`);
